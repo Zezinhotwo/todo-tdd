@@ -1,5 +1,7 @@
 package com.todo.study.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.todo.study.entity.Todo;
@@ -16,6 +18,10 @@ public class TodoService {
 
     public Todo save(Todo obj) {
         return todoRepository.save(obj);
+    }
+
+    public List<Todo> findAll() {
+        return todoRepository.findAll();
     }
 
 }
