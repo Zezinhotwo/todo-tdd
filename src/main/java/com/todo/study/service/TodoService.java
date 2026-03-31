@@ -1,6 +1,7 @@
 package com.todo.study.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,4 +25,7 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
+    public Optional<Todo> findById(Long id) {
+        return todoRepository.findById(id);
+    }
 }

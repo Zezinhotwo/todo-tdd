@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -39,6 +40,22 @@ public class TaskServiceTest {
         List<Todo> result = service.findAll();
 
         assertEquals(1, result.size());
+    }
+
+    @Test
+    void deveBuscarUmaTask() {
+
+        TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
+        TodoService service = new TodoService(todoRepository);
+
+        Todo todo = new Todo(1L, "Title", "Desc", false);
+        Optional<Todo> optionalTodo = Optional.of(todo);
+
+        when(todoRepository.findById(todo.getId())).thenReturn(optionalTodo);
+
+        Optional<Todo> result = service.findById(todo.getId());
+
+        assertEquals(optionalTodo, result);
     }
 
 }
