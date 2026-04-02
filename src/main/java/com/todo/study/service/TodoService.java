@@ -28,4 +28,15 @@ public class TodoService {
     public Optional<Todo> findById(Long id) {
         return todoRepository.findById(id);
     }
+
+    public Todo update(Long id, Todo newObj) {
+        Todo oldTodo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("ERROR: Object Not Found"));
+
+        oldTodo.setTitle(newObj.getTitle());
+        oldTodo.setDescription(newObj.getDescription());
+        oldTodo.setCompleted(newObj.isCompleted());
+
+        return todoRepository.save(oldTodo);
+    }
+
 }

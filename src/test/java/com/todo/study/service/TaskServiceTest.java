@@ -1,6 +1,10 @@
 package com.todo.study.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -43,7 +47,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    void deveBuscarUmaTask() {
+    void deveBuscarUmaPorIdTask() {
 
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
@@ -58,4 +62,28 @@ public class TaskServiceTest {
         assertEquals(optionalTodo, result);
     }
 
+    @Test
+    void deveAtualizarTask() {
+
+        TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
+        TodoService service = new TodoService(todoRepository);
+
+        Todo todoExistente = new Todo(1L, "Old Title", "Old Desc", false);
+        Todo todoAtualizado = new Todo(1L, "New Title", "New Desc", true);
+
+        when(todoRepository.findById(1L))
+                .thenReturn(Optional.of(todoExistente));
+
+        when(todoRepository.save(any(Todo.class)))
+                .thenReturn(todoAtualizado);
+
+        Todo result = service.update(1L, todoAtualizado);
+
+        assertEquals("New Title", result.getTitle());
+        assertEquals("New Desc", result.getDescription());
+        assertTrue(result.isCompleted());
+
+        verify(todoRepository).findById(1L);
+        verify(todoRepository).save(any(Todo.class));
+    }
 }

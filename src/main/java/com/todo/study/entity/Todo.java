@@ -88,4 +88,7 @@ public class Todo implements Serializable {
         return true;
     }
 
+    public Boolean isCompleted(){
+        return this.completed;
+    } 
 }
