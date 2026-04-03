@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.todo.study.entity.Todo;
 import com.todo.study.service.TodoService;
 import org.springframework.web.bind.annotation.PutMapping;
-
 
 @RestController
 @RequestMapping("/todos")
@@ -51,9 +51,14 @@ public class TodoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Todo> update(@PathVariable Long id, @RequestBody Todo entity) {
-
         Todo newObj = service.update(id, entity);
 
         return ResponseEntity.ok().body(newObj);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleById(@PathVariable Long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

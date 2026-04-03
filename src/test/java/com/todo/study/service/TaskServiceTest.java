@@ -1,9 +1,9 @@
 package com.todo.study.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -64,7 +64,6 @@ public class TaskServiceTest {
 
     @Test
     void deveAtualizarTask() {
-
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
@@ -85,5 +84,19 @@ public class TaskServiceTest {
 
         verify(todoRepository).findById(1L);
         verify(todoRepository).save(any(Todo.class));
+    }
+
+    @Test
+    void deveDeletarPorId() {
+        TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
+        TodoService todoService = new TodoService(todoRepository);
+
+        Todo todo = new Todo(1L, "Old Title", "Old Desc", false);
+
+        doNothing().when(todoRepository).deleteById(todo.getId());
+
+        todoService.deleteById(todo.getId());
+
+        verify(todoRepository).deleteById(todo.getId());
     }
 }
