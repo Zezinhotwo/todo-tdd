@@ -23,7 +23,7 @@ public class TaskServiceTest {
         TodoRepository taskRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(taskRepository);
 
-        Todo task = new Todo(null, "Title", "Description test", false);
+        Todo task = new Todo(null, "Title", "Description test", 1, false);
 
         when(taskRepository.save(task)).thenReturn(task);
 
@@ -37,7 +37,7 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
-        List<Todo> todos = List.of(new Todo(1L, "Title", "Desc", false));
+        List<Todo> todos = List.of(new Todo(1L, "Title", "Desc", 1, false));
 
         when(todoRepository.findAll()).thenReturn(todos);
 
@@ -52,7 +52,7 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
-        Todo todo = new Todo(1L, "Title", "Desc", false);
+        Todo todo = new Todo(1L, "Title", "Desc", 1, false);
         Optional<Todo> optionalTodo = Optional.of(todo);
 
         when(todoRepository.findById(todo.getId())).thenReturn(optionalTodo);
@@ -67,8 +67,8 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
-        Todo todoExistente = new Todo(1L, "Old Title", "Old Desc", false);
-        Todo todoAtualizado = new Todo(1L, "New Title", "New Desc", true);
+        Todo todoExistente = new Todo(1L, "Old Title", "Old Desc", 1, false);
+        Todo todoAtualizado = new Todo(1L, "New Title", "New Desc", 1, true);
 
         when(todoRepository.findById(1L))
                 .thenReturn(Optional.of(todoExistente));
@@ -91,7 +91,7 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService todoService = new TodoService(todoRepository);
 
-        Todo todo = new Todo(1L, "Old Title", "Old Desc", false);
+        Todo todo = new Todo(1L, "Old Title", "Old Desc", 1, false);
 
         doNothing().when(todoRepository).deleteById(todo.getId());
 
