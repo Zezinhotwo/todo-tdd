@@ -36,6 +36,8 @@ public class TodoService {
         oldTodo.setDescription(newObj.getDescription());
         oldTodo.setPrioridade(newObj.getPrioridade());
         oldTodo.setCompleted(newObj.isCompleted());
+        oldTodo.setStart(newObj.getStart());
+        oldTodo.setEnd(newObj.getEnd());
 
         return todoRepository.save(oldTodo);
     }

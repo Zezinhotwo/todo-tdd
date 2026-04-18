@@ -7,6 +7,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +19,14 @@ import com.todo.study.repository.TodoRepository;
 
 public class TaskServiceTest {
 
+    LocalDateTime now = LocalDateTime.now();
+
     @Test
     void deveCriarTask() {
         TodoRepository taskRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(taskRepository);
 
-        Todo task = new Todo(null, "Title", "Description test", 1, false);
+        Todo task = new Todo(null, "Title", "Description test", 1, false, now, now.plusDays(1));
 
         when(taskRepository.save(task)).thenReturn(task);
 
@@ -37,7 +40,7 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
-        List<Todo> todos = List.of(new Todo(1L, "Title", "Desc", 1, false));
+        List<Todo> todos = List.of(new Todo(null, "Title", "Description test", 1, false, now, now.plusDays(1)));
 
         when(todoRepository.findAll()).thenReturn(todos);
 
@@ -52,7 +55,7 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
-        Todo todo = new Todo(1L, "Title", "Desc", 1, false);
+        Todo todo = new Todo(null, "Title", "Description test", 1, false, now, now.plusDays(1));
         Optional<Todo> optionalTodo = Optional.of(todo);
 
         when(todoRepository.findById(todo.getId())).thenReturn(optionalTodo);
@@ -67,8 +70,8 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService service = new TodoService(todoRepository);
 
-        Todo todoExistente = new Todo(1L, "Old Title", "Old Desc", 1, false);
-        Todo todoAtualizado = new Todo(1L, "New Title", "New Desc", 1, true);
+        Todo todoExistente = new Todo(null, "Title", "Description test", 1, false, now, now.plusDays(1));
+        Todo todoAtualizado = new Todo(null, "New Title", "Description test knew", 1, true, now, now.plusDays(1));
 
         when(todoRepository.findById(1L))
                 .thenReturn(Optional.of(todoExistente));
@@ -79,7 +82,7 @@ public class TaskServiceTest {
         Todo result = service.update(1L, todoAtualizado);
 
         assertEquals("New Title", result.getTitle());
-        assertEquals("New Desc", result.getDescription());
+        assertEquals("Description test knew", result.getDescription());
         assertTrue(result.isCompleted());
 
         verify(todoRepository).findById(1L);
@@ -91,7 +94,7 @@ public class TaskServiceTest {
         TodoRepository todoRepository = Mockito.mock(TodoRepository.class);
         TodoService todoService = new TodoService(todoRepository);
 
-        Todo todo = new Todo(1L, "Old Title", "Old Desc", 1, false);
+        Todo todo = new Todo(null, "Title", "Old Desc", 1, false, now, now.plusDays(1));
 
         doNothing().when(todoRepository).deleteById(todo.getId());
 
