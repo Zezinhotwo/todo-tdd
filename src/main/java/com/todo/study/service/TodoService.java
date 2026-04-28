@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.todo.study.entity.Todo;
+import com.todo.study.entity.Target;
 import com.todo.study.repository.TodoRepository;
 
 @Service
@@ -17,20 +17,20 @@ public class TodoService {
         this.todoRepository = todoRepository;
     }
 
-    public Todo save(Todo obj) {
+    public Target save(Target obj) {
         return todoRepository.save(obj);
     }
 
-    public List<Todo> findAll() {
+    public List<Target> findAll() {
         return todoRepository.findAll();
     }
 
-    public Optional<Todo> findById(Long id) {
+    public Optional<Target> findById(Long id) {
         return todoRepository.findById(id);
     }
 
-    public Todo update(Long id, Todo newObj) {
-        Todo oldTodo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("ERROR: Object Not Found"));
+    public Target update(Long id, Target newObj) {
+        Target oldTodo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("ERROR: Object Not Found"));
 
         oldTodo.setTitle(newObj.getTitle());
         oldTodo.setDescription(newObj.getDescription());

@@ -2,7 +2,6 @@ package com.todo.study.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Todo implements Serializable {
+public class Target implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,10 +29,10 @@ public class Todo implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime end;
 
-    public Todo() {
+    public Target() {
     }
 
-    public Todo(Long id, @NotBlank String title, String description, Integer prioridade, Boolean completed, LocalDateTime start,
+    public Target(Long id, @NotBlank String title, String description, Integer prioridade, Boolean completed, LocalDateTime start,
             LocalDateTime end) {
         this.id = id;
         this.title = title;

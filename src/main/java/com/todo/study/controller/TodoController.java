@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.todo.study.entity.Todo;
+import com.todo.study.entity.Target;
 import com.todo.study.service.TodoService;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -31,8 +31,8 @@ public class TodoController {
     }
 
     @PostMapping
-    ResponseEntity<Todo> save(@RequestBody Todo obj) {
-        Todo todo = service.save(obj);
+    ResponseEntity<Target> save(@RequestBody Target obj) {
+        Target todo = service.save(obj);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -42,18 +42,18 @@ public class TodoController {
     }
 
     @GetMapping
-    ResponseEntity<List<Todo>> findAll() {
+    ResponseEntity<List<Target>> findAll() {
         return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Optional<Todo>> findById(@PathVariable Long id) {
+    ResponseEntity<Optional<Target>> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> update(@PathVariable Long id, @RequestBody Todo entity) {
-        Todo newObj = service.update(id, entity);
+    public ResponseEntity<Target> update(@PathVariable Long id, @RequestBody Target entity) {
+        Target newObj = service.update(id, entity);
 
         return ResponseEntity.ok().body(newObj);
     }
